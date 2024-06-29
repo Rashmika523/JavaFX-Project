@@ -8,4 +8,13 @@ public class Database {
 
     public static ArrayList<User> userTable = new ArrayList();
 
+    static {
+        userTable.add(new User(
+                "Amal",
+                "Perera",
+                "amal@gmail.com",
+                "1234"
+        ));
+    }
+
 }
