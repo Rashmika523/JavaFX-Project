@@ -23,7 +23,7 @@ public class LoginFormController {
     public PasswordField txtPassword;
     public Hyperlink txtForgotPassword;
 
-    public void loginOnAction(ActionEvent actionEvent) {
+    public void loginOnAction(ActionEvent actionEvent) throws IOException {
 
         String email = txtEmail.getText().trim().toLowerCase();
         String password = txtPassword.getText().trim();
@@ -44,7 +44,7 @@ public class LoginFormController {
         Optional<User> selectedUser = Database.userTable.stream().filter(e -> e.getEmail().equals(email)).findFirst();
         if(selectedUser.isPresent()){
             if (new PasswordManager().checkPassword(password,selectedUser.get().getPassword())){
-                System.out.println(selectedUser.get());
+               setUI("Dashboard");
             }else {
                 new Alert(Alert.AlertType.ERROR,"Email or Password Incorrect...!").show();
             }
