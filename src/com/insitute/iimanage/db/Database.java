@@ -1,6 +1,7 @@
 package com.insitute.iimanage.db;
 
 import com.insitute.iimanage.model.User;
+import com.insitute.iimanage.util.security.PasswordManager;
 
 import java.util.ArrayList;
 
@@ -13,7 +14,7 @@ public class Database {
                 "Amal",
                 "Perera",
                 "amal@gmail.com",
-                "1234"
+                new PasswordManager().encrypt("1234")
         ));
     }
 
