@@ -40,6 +40,9 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
       <Label layoutX="121.0" layoutY="283.0" prefHeight="27.0" prefWidth="32.0" text="OR" textFill="#35a8ed">
          <font>
@@ -50,6 +53,9 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
       <Separator layoutX="312.0" layoutY="14.0" orientation="VERTICAL" prefHeight="384.0" prefWidth="0.0" />
       <ImageView fitHeight="361.0" fitWidth="308.0" layoutX="323.0" layoutY="28.0" pickOnBounds="true">
@@ -59,6 +65,6 @@
       </ImageView>
    </children>
    <cursor>
-      <Cursor fx:constant="HAND" />
+      <Cursor fx:constant="DEFAULT" />
    </cursor>
 </AnchorPane>
