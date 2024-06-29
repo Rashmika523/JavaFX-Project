@@ -2,6 +2,7 @@ package com.insitute.iimanage.controller;
 
 import com.insitute.iimanage.db.Database;
 import com.insitute.iimanage.model.User;
+import com.insitute.iimanage.util.security.PasswordManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -31,7 +32,7 @@ public class SignupFormController {
         String password = txtPassword.getText().trim();
 
         Database.userTable.add(
-                new User(firstName,lastname,email,password)
+                new User(firstName,lastname,email,new PasswordManager().encrypt(password))
         );
         new Alert(Alert.AlertType.CONFIRMATION,"Your Account has been Created...!").show();
         setUI("LoginForm");
