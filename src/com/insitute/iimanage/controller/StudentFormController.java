@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
@@ -44,6 +45,11 @@ public class StudentFormController {
 
         genarateStudentID();
         setTableData();
+
+        tblStudent.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            setTableDataValue(newValue);
+        });
+
     }
 
 
@@ -120,5 +126,12 @@ public class StudentFormController {
         }
         tblStudent.setItems(oblist);
 
+    }
+
+    private void setTableDataValue(StudentTm studentTm){
+        txtStudentID.setText(studentTm.getId());
+        txtFullName.setText(studentTm.getName());
+        txtDob.setValue(LocalDate.parse(studentTm.getDob()));
+        btnSaveStudnet.setText("Update Student");
     }
 }
