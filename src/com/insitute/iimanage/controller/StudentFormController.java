@@ -70,19 +70,39 @@ public class StudentFormController {
 
     public void saveStudentOnAction(ActionEvent actionEvent) {
 
-        Student student = new Student(
-                txtStudentID.getText(),
-                txtFullName.getText(),
-                Date.from(txtDob.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()),
-                txtAddress.getText()
-        );
+        if(btnSaveStudnet.getText().equalsIgnoreCase("Save Student")){
+            Student student = new Student(
+                    txtStudentID.getText(),
+                    txtFullName.getText(),
+                    Date.from(txtDob.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                    txtAddress.getText()
+            );
 
-        Database.studentTable.add(student);
-        genarateStudentID();
-        clear();
-        setTableData();
-        new Alert(Alert.AlertType.INFORMATION, "Student has been Saved...!").show();
-        System.out.println(student.toString());
+            Database.studentTable.add(student);
+            genarateStudentID();
+            clear();
+            setTableData();
+            new Alert(Alert.AlertType.INFORMATION, "Student has been Saved...!").show();
+            System.out.println(student.toString());
+        }else {
+
+            for (Student student:Database.studentTable) {
+
+                if(student.getId().equals(txtStudentID.getText())){
+                    student.setAddress(txtAddress.getText());
+                    student.setName(txtFullName.getText());
+                    student.setDob(Date.from(txtDob.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+
+                    setTableData();
+                    clear();
+                    genarateStudentID();
+                    new Alert(Alert.AlertType.INFORMATION,"Student has been updated...!").show();
+                    btnSaveStudnet.setText("Save Student");
+                    return;
+                }
+            }
+
+        }
     }
 
     private void setUI(String location) throws IOException {
@@ -138,6 +158,7 @@ public class StudentFormController {
     private void setTableDataValue(StudentTm studentTm) {
         txtStudentID.setText(studentTm.getId());
         txtFullName.setText(studentTm.getName());
+        txtAddress.setText(studentTm.getAddress());
         txtDob.setValue(LocalDate.parse(studentTm.getDob()));
         btnSaveStudnet.setText("Update Student");
     }
