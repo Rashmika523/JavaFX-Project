@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Optional;
 
 public class StudentFormController {
     public AnchorPane context;
@@ -70,7 +71,7 @@ public class StudentFormController {
 
     public void saveStudentOnAction(ActionEvent actionEvent) {
 
-        if(btnSaveStudnet.getText().equalsIgnoreCase("Save Student")){
+        if (btnSaveStudnet.getText().equalsIgnoreCase("Save Student")) {
             Student student = new Student(
                     txtStudentID.getText(),
                     txtFullName.getText(),
@@ -84,11 +85,11 @@ public class StudentFormController {
             setTableData();
             new Alert(Alert.AlertType.INFORMATION, "Student has been Saved...!").show();
             System.out.println(student.toString());
-        }else {
+        } else {
 
-            for (Student student:Database.studentTable) {
+            for (Student student : Database.studentTable) {
 
-                if(student.getId().equals(txtStudentID.getText())){
+                if (student.getId().equals(txtStudentID.getText())) {
                     student.setAddress(txtAddress.getText());
                     student.setName(txtFullName.getText());
                     student.setDob(Date.from(txtDob.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
@@ -96,7 +97,7 @@ public class StudentFormController {
                     setTableData();
                     clear();
                     genarateStudentID();
-                    new Alert(Alert.AlertType.INFORMATION,"Student has been updated...!").show();
+                    new Alert(Alert.AlertType.INFORMATION, "Student has been updated...!").show();
                     btnSaveStudnet.setText("Save Student");
                     return;
                 }
@@ -142,7 +143,9 @@ public class StudentFormController {
         ObservableList<StudentTm> oblist = FXCollections.observableArrayList();
 
         for (Student student : Database.studentTable) {
+
             Button button = new Button("Delete");
+
             oblist.add(new StudentTm(
                     student.getId(),
                     student.getName(),
@@ -150,6 +153,19 @@ public class StudentFormController {
                     student.getAddress(),
                     button
             ));
+
+            button.setOnAction(event -> {
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you Sure...?", ButtonType.NO, ButtonType.YES);
+                Optional<ButtonType> buttonType = alert.showAndWait();
+
+                if(buttonType.get().equals(ButtonType.YES)){
+                    Database.studentTable.remove(student);
+                    new Alert(Alert.AlertType.INFORMATION,"Student has Been Deleted...!");
+                    setTableData();
+                }
+
+            });
         }
         tblStudent.setItems(oblist);
 
