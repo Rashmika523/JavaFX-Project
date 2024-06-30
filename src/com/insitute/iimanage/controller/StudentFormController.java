@@ -47,13 +47,20 @@ public class StudentFormController {
         setTableData();
 
         tblStudent.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            setTableDataValue(newValue);
+            if (null != newValue) {
+                setTableDataValue(newValue);
+            }
         });
 
     }
 
 
     public void newStudentOnAction(ActionEvent actionEvent) {
+
+        genarateStudentID();
+        setTableData();
+        clear();
+        btnSaveStudnet.setText("Save Student");
 
     }
 
@@ -128,7 +135,7 @@ public class StudentFormController {
 
     }
 
-    private void setTableDataValue(StudentTm studentTm){
+    private void setTableDataValue(StudentTm studentTm) {
         txtStudentID.setText(studentTm.getId());
         txtFullName.setText(studentTm.getName());
         txtDob.setValue(LocalDate.parse(studentTm.getDob()));
