@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -34,7 +35,15 @@ public class StudentFormController {
     public TableColumn<StudentTm, Button> colOption;
 
     public void initialize() {
+
+        colStudnetID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colFullName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colDob.setCellValueFactory(new PropertyValueFactory<>("dob"));
+        colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        colOption.setCellValueFactory(new PropertyValueFactory<>("button"));
+
         genarateStudentID();
+        setTableData();
     }
 
 
@@ -58,6 +67,7 @@ public class StudentFormController {
         Database.studentTable.add(student);
         genarateStudentID();
         clear();
+        setTableData();
         new Alert(Alert.AlertType.INFORMATION, "Student has been Saved...!").show();
         System.out.println(student.toString());
     }
