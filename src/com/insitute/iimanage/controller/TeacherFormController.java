@@ -63,6 +63,10 @@ public class TeacherFormController {
     }
 
     public void newTeacherOnAction(ActionEvent actionEvent) {
+        generateTeacherID();
+        setTableData(searchText);
+        clear();
+        btnSaveTeacher.setText("Save Teacher");
     }
 
     public void backToHomeOnAction(ActionEvent actionEvent) throws IOException {
