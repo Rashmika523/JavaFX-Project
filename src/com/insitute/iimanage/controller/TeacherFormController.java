@@ -3,16 +3,24 @@ package com.insitute.iimanage.controller;
 import com.insitute.iimanage.db.Database;
 import com.insitute.iimanage.model.Student;
 import com.insitute.iimanage.model.Teacher;
+import com.insitute.iimanage.model.Tm.StudentTm;
+import com.insitute.iimanage.model.Tm.TeacherTm;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Optional;
 
 public class TeacherFormController {
     public AnchorPane context;
@@ -21,16 +29,37 @@ public class TeacherFormController {
     public TextField txtAddress;
     public Button btnSaveTeacher;
     public TextField txtSearch;
-    public TableView tblTeacher;
-    public TableColumn colTeacherId;
-    public TableColumn colFullName;
-    public TableColumn colAddress;
-    public TableColumn colContact;
-    public TableColumn colOption;
+    public TableView<TeacherTm> tblTeacher;
+    public TableColumn<TeacherTm,String> colTeacherId;
+    public TableColumn<TeacherTm,String> colFullName;
+    public TableColumn<TeacherTm,String> colAddress;
+    public TableColumn<TeacherTm,String> colContact;
+    public TableColumn<TeacherTm,Button> colOption;
     public TextField txtContact;
 
+    private String searchText="";
+
     public void initialize() {
+
+        colTeacherId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colFullName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        colContact.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        colOption.setCellValueFactory(new PropertyValueFactory<>("button"));
+
         generateTeacherID();
+        setTableData(searchText);
+
+        tblTeacher.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (null != newValue) {
+                setTableDataValue(newValue);
+            }
+        });
+
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchText = newValue;
+            setTableData(searchText);
+        });
     }
 
     public void newTeacherOnAction(ActionEvent actionEvent) {
@@ -53,7 +82,7 @@ public class TeacherFormController {
             Database.teacherTable.add(teacher);
             generateTeacherID();
             clear();
-            //setTableData(searchText);
+            setTableData(searchText);
             new Alert(Alert.AlertType.INFORMATION, "Teacher has been Saved...!").show();
         } else {
 
@@ -64,7 +93,7 @@ public class TeacherFormController {
                     teacher.setName(txtFullName.getText());
                     teacher.setContact(txtContact.getText());
 
-                    //setTableData(searchText);
+                    setTableData(searchText);
                     clear();
                     generateTeacherID();
                     new Alert(Alert.AlertType.INFORMATION, "Teacher has been updated...!").show();
@@ -106,6 +135,50 @@ public class TeacherFormController {
         txtContact.clear();
         txtAddress.clear();
         txtFullName.clear();
+    }
+
+    private void setTableData(String name) {
+
+        ObservableList<TeacherTm> oblist = FXCollections.observableArrayList();
+
+        for (Teacher teacher : Database.teacherTable) {
+
+            if(teacher.getName().contains(name)){
+
+                Button button = new Button("Delete");
+
+                oblist.add(new TeacherTm(
+                        teacher.getTeacherId(),
+                        teacher.getName(),
+                        teacher.getAddress(),
+                        teacher.getContact(),
+                        button
+                ));
+
+                button.setOnAction(event -> {
+
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you Sure...?", ButtonType.NO, ButtonType.YES);
+                    Optional<ButtonType> buttonType = alert.showAndWait();
+
+                    if(buttonType.get().equals(ButtonType.YES)){
+                        Database.teacherTable.remove(teacher);
+                        new Alert(Alert.AlertType.INFORMATION,"Teacher has Been Deleted...!");
+                        setTableData(searchText);
+                    }
+
+                });
+            }
+        }
+        tblTeacher.setItems(oblist);
+
+    }
+
+    private void setTableDataValue(TeacherTm teacherTm) {
+        textTeacherID.setText(teacherTm.getId());
+        txtFullName.setText(teacherTm.getName());
+        txtAddress.setText(teacherTm.getAddress());
+        txtContact.setText(teacherTm.getContact());
+        btnSaveTeacher.setText("Update Teacher");
     }
 
 }
