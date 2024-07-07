@@ -1,6 +1,7 @@
 package com.insitute.iimanage.db;
 
 import com.insitute.iimanage.model.Student;
+import com.insitute.iimanage.model.Teacher;
 import com.insitute.iimanage.model.User;
 import com.insitute.iimanage.util.security.PasswordManager;
 
@@ -10,6 +11,7 @@ public class Database {
 
     public static ArrayList<User> userTable = new ArrayList();
     public static ArrayList<Student> studentTable = new ArrayList();
+    public static ArrayList<Teacher> teacherTable= new ArrayList<>();
 
     static {
         userTable.add(new User(
