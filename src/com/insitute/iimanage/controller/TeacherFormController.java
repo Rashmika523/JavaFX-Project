@@ -6,14 +6,13 @@ import com.insitute.iimanage.model.Teacher;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class TeacherFormController {
     public AnchorPane context;
@@ -30,7 +29,7 @@ public class TeacherFormController {
     public TableColumn colOption;
     public TextField txtContact;
 
-    public void initialize(){
+    public void initialize() {
         generateTeacherID();
     }
 
@@ -42,6 +41,40 @@ public class TeacherFormController {
     }
 
     public void saveTeacherOnAction(ActionEvent actionEvent) {
+
+        if (btnSaveTeacher.getText().equalsIgnoreCase("Save Teacher")) {
+            Teacher teacher = new Teacher(
+                    textTeacherID.getText(),
+                    txtFullName.getText(),
+                    txtAddress.getText(),
+                    txtContact.getText()
+            );
+
+            Database.teacherTable.add(teacher);
+            generateTeacherID();
+            clear();
+            //setTableData(searchText);
+            new Alert(Alert.AlertType.INFORMATION, "Teacher has been Saved...!").show();
+        } else {
+
+            for (Teacher teacher : Database.teacherTable) {
+
+                if (teacher.getTeacherId().equals(textTeacherID.getText())) {
+                    teacher.setAddress(txtAddress.getText());
+                    teacher.setName(txtFullName.getText());
+                    teacher.setContact(txtContact.getText());
+
+                    //setTableData(searchText);
+                    clear();
+                    generateTeacherID();
+                    new Alert(Alert.AlertType.INFORMATION, "Teacher has been updated...!").show();
+                    btnSaveTeacher.setText("Save Teacher");
+                    return;
+                }
+            }
+
+        }
+
     }
 
     private void setUI(String location) throws IOException {
@@ -69,4 +102,10 @@ public class TeacherFormController {
         }
 
     }
+    private void clear(){
+        txtContact.clear();
+        txtAddress.clear();
+        txtFullName.clear();
+    }
+
 }
