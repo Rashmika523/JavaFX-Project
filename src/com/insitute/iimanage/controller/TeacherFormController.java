@@ -1,9 +1,7 @@
 package com.insitute.iimanage.controller;
 
 import com.insitute.iimanage.db.Database;
-import com.insitute.iimanage.model.Student;
 import com.insitute.iimanage.model.Teacher;
-import com.insitute.iimanage.model.Tm.StudentTm;
 import com.insitute.iimanage.model.Tm.TeacherTm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,10 +14,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.Optional;
 
 public class TeacherFormController {
