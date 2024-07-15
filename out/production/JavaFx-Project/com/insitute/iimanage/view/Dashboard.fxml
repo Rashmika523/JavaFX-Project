@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="context" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.insitute.iimanage.controller.DashboardController">
+   <children>
+      <Label layoutX="32.0" layoutY="14.0" prefHeight="27.0" prefWidth="114.0" text="Dashboard" textFill="#35a8ed">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Separator layoutX="35.0" layoutY="48.0" prefHeight="12.0" prefWidth="543.0" />
+      <Button layoutX="35.0" layoutY="82.0" mnemonicParsing="false" onAction="#studentOnAction" prefHeight="100.0" prefWidth="155.0" style="-fx-background-color: #35A8ED;" text="Student" textFill="#f2f0f0">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label fx:id="lblDate" layoutX="186.0" layoutY="14.0" prefHeight="27.0" prefWidth="114.0" text="2024-01-01" textFill="#0c214e">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTime" layoutX="312.0" layoutY="14.0" prefHeight="27.0" prefWidth="114.0" text="05.20.25" textFill="#0c214e">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="225.0" layoutY="84.0" mnemonicParsing="false" onAction="#teacherOnAction" prefHeight="100.0" prefWidth="155.0" style="-fx-background-color: #45B84F;" text="Teacher" textFill="#f2f0f0">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="411.0" layoutY="84.0" mnemonicParsing="false" onAction="#intakeOnAction" prefHeight="100.0" prefWidth="155.0" style="-fx-background-color: #FE5E1C;" text="Intake" textFill="#f2f0f0">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="125.0" layoutY="214.0" mnemonicParsing="false" onAction="#courseOnAction" prefHeight="100.0" prefWidth="155.0" style="-fx-background-color: #0C214E;" text="Course" textFill="#f2f0f0">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="312.0" layoutY="214.0" mnemonicParsing="false" onAction="#RegistrationOnAction" prefHeight="100.0" prefWidth="179.0" style="-fx-background-color: #35A8ED;" text="Registration" textFill="#f2f0f0">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label layoutX="22.0" layoutY="359.0" prefHeight="27.0" prefWidth="114.0" text="From : Codemaster" textFill="#0c214e">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="503.0" layoutY="359.0" prefHeight="27.0" prefWidth="85.0" text="Version :1.0.0" textFill="#0c214e">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Button layoutX="453.0" layoutY="12.0" mnemonicParsing="false" onAction="#logoutOnAction" prefHeight="30.0" prefWidth="122.0" style="-fx-background-color: #0C214E;" text="Logout" textFill="#f2f0f0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+   </children>
+</AnchorPane>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="context" prefHeight="541.0" prefWidth="771.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.insitute.iimanage.controller.TeacherFormController">
+   <children>
+      <Label layoutX="35.0" layoutY="17.0" prefHeight="27.0" prefWidth="198.0" text="Teacher Management" textFill="#35a8ed">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="446.0" layoutY="17.0" mnemonicParsing="false" onAction="#newTeacherOnAction" prefHeight="30.0" prefWidth="147.0" style="-fx-background-color: #35A8ED;" text="+New Teacher" textFill="#f2f0f0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="606.0" layoutY="17.0" mnemonicParsing="false" onAction="#backToHomeOnAction" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #0C214E;" text="Back To Home" textFill="#f2f0f0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <TextField fx:id="textTeacherID" disable="true" layoutX="32.0" layoutY="87.0" prefHeight="30.0" prefWidth="101.0" promptText="Teacher ID">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtFullName" layoutX="148.0" layoutY="87.0" prefHeight="30.0" prefWidth="177.0" promptText="Full Name">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtAddress" layoutX="348.0" layoutY="87.0" prefHeight="30.0" prefWidth="187.0" promptText="Address">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </TextField>
+      <Button fx:id="btnSaveTeacher" layoutX="261.0" layoutY="145.0" mnemonicParsing="false" onAction="#saveTeacherOnAction" prefHeight="30.0" prefWidth="168.0" style="-fx-background-color: #35A8ED;" text="Save Teacher" textFill="#f2f0f0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <TextField fx:id="txtSearch" alignment="CENTER" layoutX="23.0" layoutY="193.0" prefHeight="30.0" prefWidth="658.0" promptText="Search Teacher">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </TextField>
+      <TableView fx:id="tblTeacher" layoutX="48.0" layoutY="246.0" prefHeight="272.0" prefWidth="650.0">
+         <columns>
+            <TableColumn fx:id="colTeacherId" prefWidth="75.0" text="Teacher ID" />
+            <TableColumn fx:id="colFullName" prefWidth="164.0" text="Full Name" />
+            <TableColumn fx:id="colAddress" prefWidth="124.0" text="Address" />
+            <TableColumn fx:id="colContact" prefWidth="150.0" text="Contact" />
+            <TableColumn fx:id="colOption" prefWidth="132.0" text="Option" />
+         </columns>
+      </TableView>
+      <Separator layoutX="34.0" layoutY="61.0" prefHeight="7.0" prefWidth="725.0" />
+      <TextField fx:id="txtContact" layoutX="552.0" layoutY="87.0" prefHeight="30.0" prefWidth="187.0" promptText="Contact">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </TextField>
+   </children>
+</AnchorPane>

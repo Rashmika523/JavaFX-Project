@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="context" prefHeight="784.0" prefWidth="874.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.insitute.iimanage.controller.CourseFormController">
+   <children>
+      <Label layoutX="36.0" layoutY="28.0" prefHeight="27.0" prefWidth="198.0" text="Course Management" textFill="#35a8ed">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Separator layoutX="36.0" layoutY="71.0" prefHeight="12.0" prefWidth="646.0" />
+      <Button layoutX="393.0" layoutY="28.0" mnemonicParsing="false" onAction="#newCourseOnAction" prefHeight="30.0" prefWidth="147.0" style="-fx-background-color: #35A8ED;" text="+New Course" textFill="#f2f0f0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="553.0" layoutY="28.0" mnemonicParsing="false" onAction="#backToHomeOnAction" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: #0C214E;" text="Back To Home" textFill="#f2f0f0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <TextField fx:id="txtCourseID" disable="true" layoutX="33.0" layoutY="98.0" prefHeight="30.0" prefWidth="101.0" promptText="Course ID">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtCourseName" layoutX="149.0" layoutY="98.0" prefHeight="30.0" prefWidth="154.0" promptText="Course Name">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="txtCost" layoutX="318.0" layoutY="98.0" prefHeight="30.0" prefWidth="137.0" promptText="Cost">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </TextField>
+      <ComboBox fx:id="cmbTeachers" layoutX="476.0" layoutY="98.0" prefHeight="30.0" prefWidth="154.0" promptText="Teacher" />
+      <TextField fx:id="txtTechnologies" layoutX="167.0" layoutY="154.0" prefHeight="30.0" prefWidth="186.0" promptText="Technologies">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </TextField>
+      <Button layoutX="379.0" layoutY="154.0" mnemonicParsing="false" onAction="#addTechOnAction" prefHeight="30.0" prefWidth="147.0" style="-fx-background-color: #35A8ED;" text="+ Add Technology" textFill="#f2f0f0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <TableView fx:id="tblTechnologies" layoutX="168.0" layoutY="214.0" prefHeight="200.0" prefWidth="422.0">
+        <columns>
+          <TableColumn fx:id="colTechId" prefWidth="126.0" text="ID" />
+            <TableColumn fx:id="coltech" minWidth="0.0" prefWidth="150.0" text="Technology" />
+          <TableColumn fx:id="colRemove" prefWidth="145.0" text="Remove" />
+        </columns>
+      </TableView>
+      <Separator layoutX="23.0" layoutY="471.0" prefHeight="12.0" prefWidth="725.0" />
+      <Button fx:id="btnSave" layoutX="306.0" layoutY="426.0" mnemonicParsing="false" onAction="#saveCourseOnAction" prefHeight="30.0" prefWidth="147.0" style="-fx-background-color: #35A8ED;" text="Save Course" textFill="#f2f0f0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <TextField fx:id="txtSearch" alignment="CENTER" layoutX="42.0" layoutY="490.0" prefHeight="30.0" prefWidth="699.0" promptText="Search Here">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </TextField>
+      <TableView fx:id="tblCourse" layoutX="54.0" layoutY="538.0" prefHeight="200.0" prefWidth="679.0">
+         <columns>
+            <TableColumn fx:id="colCourseId" prefWidth="75.0" text="ID" />
+            <TableColumn fx:id="colCourse" minWidth="0.0" prefWidth="113.0" text="Course" />
+            <TableColumn fx:id="colTechOnCourse" prefWidth="140.0" text="Technolgies" />
+            <TableColumn fx:id="colTeacher" prefWidth="118.0" text="Teacher" />
+            <TableColumn fx:id="colCost" prefWidth="114.0" text="Cost" />
+            <TableColumn fx:id="colOption" prefWidth="114.0" text="Option" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
