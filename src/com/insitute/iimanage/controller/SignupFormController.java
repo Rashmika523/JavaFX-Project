@@ -86,6 +86,7 @@ public class SignupFormController {
         } else {
             return false;
         }*/
+        System.out.println("HI");
 
         return statement.executeUpdate(sql) > 0;
     }
