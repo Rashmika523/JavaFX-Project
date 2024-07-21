@@ -18,7 +18,9 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 public class StudentFormController {
@@ -150,17 +152,17 @@ public class StudentFormController {
         }*/
         try {
             String stringId = getLastId();
-            if(stringId!=null){
+            if (stringId != null) {
                 String[] split = stringId.split("-");
                 String lastIdAsString = split[1];
                 int lastIdAsInteger = Integer.parseInt(lastIdAsString);
                 lastIdAsInteger++;
                 String newId = "S-" + lastIdAsInteger;
                 txtStudentID.setText(newId);
-            }else {
+            } else {
                 txtStudentID.setText("S-1");
             }
-        }catch (ClassNotFoundException | SQLException e){
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
 
@@ -253,5 +255,33 @@ public class StudentFormController {
         return null;
     }
 
+    private List<Student> searchStudent(String text) throws ClassNotFoundException, SQLException {
+
+        text = "%" + text + "%";
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection = DriverManager.getConnection(
+                "jdbc:mysql://127.0.0.1:3306/iitmanage", "root", "1234");
+        String sql = "SELECT * FROM student WHERE full_name LIKE ? OR address LIKE ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, text);
+        preparedStatement.setString(2, text);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        List<Student> list = new ArrayList<>();
+
+        while (resultSet.next()) {
+
+            list.add(new Student(
+                            resultSet.getString(1),
+                            resultSet.getString(2),
+                            resultSet.getDate(3),
+                            resultSet.getString(4)
+                    )
+            );
+        }
+
+        return list;
+    }
 
 }
