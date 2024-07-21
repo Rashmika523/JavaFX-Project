@@ -178,10 +178,12 @@ public class StudentFormController {
 
         ObservableList<StudentTm> oblist = FXCollections.observableArrayList();
 
-        for (Student student : Database.studentTable) {
+        //connect with mysql database;
 
-            if (student.getName().contains(name)) {
+        try {
+            List<Student> studentList = searchStudent(name);
 
+            for (Student student:studentList) {
                 Button button = new Button("Delete");
 
                 oblist.add(new StudentTm(
@@ -205,7 +207,13 @@ public class StudentFormController {
 
                 });
             }
+
+
+
+        }catch (ClassNotFoundException | SQLException  e){
+            e.printStackTrace();
         }
+
         tblStudent.setItems(oblist);
 
     }
