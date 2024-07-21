@@ -134,7 +134,7 @@ public class StudentFormController {
 
     private void genarateStudentID() {
 
-        if (!Database.studentTable.isEmpty()) {
+       /* if (!Database.studentTable.isEmpty()) {
 
             Student lastStudent = Database.studentTable.get(Database.studentTable.size() - 1);
             String stringId = lastStudent.getId();
@@ -147,6 +147,21 @@ public class StudentFormController {
 
         } else {
             txtStudentID.setText("S-1");
+        }*/
+        try {
+            String stringId = getLastId();
+            if(stringId!=null){
+                String[] split = stringId.split("-");
+                String lastIdAsString = split[1];
+                int lastIdAsInteger = Integer.parseInt(lastIdAsString);
+                lastIdAsInteger++;
+                String newId = "S-" + lastIdAsInteger;
+                txtStudentID.setText(newId);
+            }else {
+                txtStudentID.setText("S-1");
+            }
+        }catch (ClassNotFoundException | SQLException e){
+            e.printStackTrace();
         }
 
     }
