@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.IOException;
+import java.sql.*;
 import java.util.Optional;
 
 public class LoginFormController {
@@ -27,6 +28,25 @@ public class LoginFormController {
 
         String email = txtEmail.getText().trim().toLowerCase();
         String password = txtPassword.getText().trim();
+
+
+        //connect login method with mysql database
+
+        try {
+            User user = login(email);
+            System.out.println(user);
+            if(null!=user){
+                if(new PasswordManager().checkPassword(password, user.getPassword())){
+                    setUI("Dashboard");
+                }else {
+                    new Alert(Alert.AlertType.ERROR, "Email or Password Incorrect...!").show();
+                }
+            }else {
+                new Alert(Alert.AlertType.ERROR, "User Not Found...!").show();
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
 
         /*for(User user: Database.userTable){
             if(user.getEmail().equals(email)){
@@ -41,16 +61,16 @@ public class LoginFormController {
         }
         new Alert(Alert.AlertType.ERROR,"User Not Found...!");*/
 
-        Optional<User> selectedUser = Database.userTable.stream().filter(e -> e.getEmail().equals(email)).findFirst();
-        if(selectedUser.isPresent()){
-            if (new PasswordManager().checkPassword(password,selectedUser.get().getPassword())){
-               setUI("Dashboard");
-            }else {
-                new Alert(Alert.AlertType.ERROR,"Email or Password Incorrect...!").show();
+       /* Optional<User> selectedUser = Database.userTable.stream().filter(e -> e.getEmail().equals(email)).findFirst();
+        if (selectedUser.isPresent()) {
+            if (new PasswordManager().checkPassword(password, selectedUser.get().getPassword())) {
+                setUI("Dashboard");
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Email or Password Incorrect...!").show();
             }
-        }else {
-            new Alert(Alert.AlertType.ERROR,"User Not Found...!").show();
-        }
+        } else {
+            new Alert(Alert.AlertType.ERROR, "User Not Found...!").show();
+        }*/
 
     }
 
@@ -67,5 +87,28 @@ public class LoginFormController {
 
     public void forgotPasswordOnAction(ActionEvent actionEvent) throws IOException {
         setUI("ForgotPasswordForm");
+    }
+
+    private User login(String email) throws ClassNotFoundException, SQLException {
+
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection = DriverManager.
+                getConnection("jdbc:mysql://localhost:3306/iitmanage", "root", "1234");
+        String sql = "SELECT * FROM  user WHERE email =?";
+
+        System.out.println(sql);
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1,email);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            User user = new User(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4)
+            );
+            return user;
+        }
+        return null;
     }
 }

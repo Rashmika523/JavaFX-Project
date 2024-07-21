@@ -14,10 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.DataInput;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Locale;
 
 public class SignupFormController {
@@ -38,7 +35,7 @@ public class SignupFormController {
         /*Database.userTable.add(
                 new User(firstName,lastname,email,new PasswordManager().encrypt(password))
         );*/
-        User user = new User(email, firstName, lastname, password);
+        User user = new User(firstName,lastname,email,password);
         boolean isSaved = false;
 
         try {
@@ -74,20 +71,24 @@ public class SignupFormController {
         Connection connection = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/iitmanage", "root", "1234");
 
-        String sql = "INSERT INTO user VALUE ('" + user.getEmail() + "','" + user.getFirstName() +
-                "','" + user.getLastName() + "','" + user.getPassword() + "')";
+        String sql = "INSERT INTO user (email, first_name, last_name, password) VALUES (?, ?, ?, ?)";
 
-        Statement statement = connection.createStatement();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-       /* int rowCount = statement.executeUpdate(sql);
+        preparedStatement.setString(1, user.getEmail());
+        preparedStatement.setString(2, user.getFirstName());
+        preparedStatement.setString(3, user.getLastName());
+        preparedStatement.setString(4, new PasswordManager().encrypt(user.getPassword()));
+
+        return preparedStatement.executeUpdate() > 0;
+
+       /* int rowCount = preparedStatement.executeUpdate(sql);
 
         if (rowCount > 0) {
             return true;
         } else {
             return false;
         }*/
-        System.out.println("HI");
 
-        return statement.executeUpdate(sql) > 0;
     }
 }

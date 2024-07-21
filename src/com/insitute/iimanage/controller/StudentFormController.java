@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -36,7 +37,7 @@ public class StudentFormController {
     public TableColumn<StudentTm, String> colAddress;
     public TableColumn<StudentTm, Button> colOption;
 
-    String searchText="";
+    String searchText = "";
 
     public void initialize() {
 
@@ -57,7 +58,7 @@ public class StudentFormController {
 
         txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             searchText = newValue;
-           setTableData(searchText);
+            setTableData(searchText);
         });
 
     }
@@ -86,11 +87,22 @@ public class StudentFormController {
                     txtAddress.getText()
             );
 
+            //connect mysql database
+            try {
+                if (saveStudent(student)) {
+                    genarateStudentID();
+                    clear();
+                    setTableData(searchText);
+                    new Alert(Alert.AlertType.INFORMATION, "Student has been Saved...!").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Something went wrong...!").show();
+                }
+            } catch (ClassNotFoundException | SQLException e) {
+                e.printStackTrace();
+            }
+
             Database.studentTable.add(student);
-            genarateStudentID();
-            clear();
-            setTableData(searchText);
-            new Alert(Alert.AlertType.INFORMATION, "Student has been Saved...!").show();
+
             System.out.println(student.toString());
         } else {
 
@@ -151,7 +163,7 @@ public class StudentFormController {
 
         for (Student student : Database.studentTable) {
 
-            if(student.getName().contains(name)){
+            if (student.getName().contains(name)) {
 
                 Button button = new Button("Delete");
 
@@ -168,9 +180,9 @@ public class StudentFormController {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you Sure...?", ButtonType.NO, ButtonType.YES);
                     Optional<ButtonType> buttonType = alert.showAndWait();
 
-                    if(buttonType.get().equals(ButtonType.YES)){
+                    if (buttonType.get().equals(ButtonType.YES)) {
                         Database.studentTable.remove(student);
-                        new Alert(Alert.AlertType.INFORMATION,"Student has Been Deleted...!");
+                        new Alert(Alert.AlertType.INFORMATION, "Student has Been Deleted...!");
                         setTableData(searchText);
                     }
 
@@ -188,4 +200,43 @@ public class StudentFormController {
         txtDob.setValue(LocalDate.parse(studentTm.getDob()));
         btnSaveStudnet.setText("Update Student");
     }
+
+    private boolean saveStudent(Student student) throws ClassNotFoundException, SQLException {
+
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/iitmanage", "root", "1234");
+
+        String sql = "INSERT INTO student VALUES (?,?,?,?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+        preparedStatement.setString(1, student.getId());
+        preparedStatement.setString(2, student.getName());
+        preparedStatement.setObject(3, student.getDob());
+        preparedStatement.setString(4, student.getAddress());
+
+        return preparedStatement.executeUpdate() > 0;
+
+    }
+
+    private String getLastId() throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/iitmanage", "root", "1234");
+
+        String sql = "SELECT student_id FROM student  ORDER BY " +
+                "CAST(SUBSTRING(student_id,3) AS UNSIGNED ) DESC LIMIT 1";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            return resultSet.getString(1);
+        }
+
+        return null;
+    }
+
+
 }
