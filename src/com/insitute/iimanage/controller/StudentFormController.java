@@ -200,9 +200,18 @@ public class StudentFormController {
                     Optional<ButtonType> buttonType = alert.showAndWait();
 
                     if (buttonType.get().equals(ButtonType.YES)) {
-                        Database.studentTable.remove(student);
-                        new Alert(Alert.AlertType.INFORMATION, "Student has Been Deleted...!");
-                        setTableData(searchText);
+                       // Database.studentTable.remove(student);
+                        try{
+                            if(deleteStudent(student.getId())){
+                                new Alert(Alert.AlertType.INFORMATION, "Student has Been Deleted...!");
+                                setTableData(searchText);
+                            }else {
+                                new Alert(Alert.AlertType.INFORMATION, "Something went wrong...!");
+                            }
+                        }catch (ClassNotFoundException | SQLException e){
+                            e.printStackTrace();
+                        }
+
                     }
 
                 });
