@@ -72,7 +72,7 @@ public class SignupFormController {
         Connection connection = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/iitmanage", "root", "1234");*/
 
-        Connection connection = DBConnection.getInstance().getConnection();
+        DBConnection.getInstance().getConnection()
 
         String sql = "INSERT INTO user (email, first_name, last_name, password) VALUES (?, ?, ?, ?)";
 

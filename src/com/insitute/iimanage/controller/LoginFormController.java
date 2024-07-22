@@ -1,5 +1,6 @@
 package com.insitute.iimanage.controller;
 
+import com.insitute.iimanage.db.DBConnection;
 import com.insitute.iimanage.db.Database;
 import com.insitute.iimanage.model.User;
 import com.insitute.iimanage.util.security.PasswordManager;
@@ -35,13 +36,13 @@ public class LoginFormController {
         try {
             User user = login(email);
             System.out.println(user);
-            if(null!=user){
-                if(new PasswordManager().checkPassword(password, user.getPassword())){
+            if (null != user) {
+                if (new PasswordManager().checkPassword(password, user.getPassword())) {
                     setUI("Dashboard");
-                }else {
+                } else {
                     new Alert(Alert.AlertType.ERROR, "Email or Password Incorrect...!").show();
                 }
-            }else {
+            } else {
                 new Alert(Alert.AlertType.ERROR, "User Not Found...!").show();
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -91,14 +92,15 @@ public class LoginFormController {
 
     private User login(String email) throws ClassNotFoundException, SQLException {
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
+        /*Class.forName("com.mysql.cj.jdbc.Driver");
         Connection connection = DriverManager.
-                getConnection("jdbc:mysql://localhost:3306/iitmanage", "root", "1234");
+                getConnection("jdbc:mysql://localhost:3306/iitmanage", "root", "1234");*/
+        Connection connection = DBConnection.getInstance().getConnection();
         String sql = "SELECT * FROM  user WHERE email =?";
 
         System.out.println(sql);
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1,email);
+        preparedStatement.setString(1, email);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
             User user = new User(
