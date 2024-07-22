@@ -262,7 +262,7 @@ public class StudentFormController {
        /* Class.forName("com.mysql.cj.jdbc.Driver");
         Connection connection = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/iitmanage", "root", "1234");*/
-        Connection connection = DBConnection.getInstance().getConnection();
+        DBConnection.getInstance().getConnection()
 
         String sql = "INSERT INTO student VALUES (?,?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
