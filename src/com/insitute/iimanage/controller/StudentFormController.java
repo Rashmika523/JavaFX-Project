@@ -275,7 +275,6 @@ public class StudentFormController {
         preparedStatement.setString(2, text);
 
         ResultSet resultSet = preparedStatement.executeQuery();
-
         List<Student> list = new ArrayList<>();
 
         while (resultSet.next()) {
@@ -292,4 +291,13 @@ public class StudentFormController {
         return list;
     }
 
+    private boolean deleteStudent(String id) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection = DriverManager.getConnection(
+                "jdbc:mysql://127.0.0.1:3306/iitmanage", "root", "1234");
+        String sql ="DELETE FROM student WHERE student_id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1,id);
+        return preparedStatement.executeUpdate()>0;
+    }
 }
