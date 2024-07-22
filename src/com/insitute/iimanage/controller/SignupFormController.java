@@ -1,5 +1,6 @@
 package com.insitute.iimanage.controller;
 
+import com.insitute.iimanage.db.DBConnection;
 import com.insitute.iimanage.db.Database;
 import com.insitute.iimanage.model.User;
 import com.insitute.iimanage.util.security.PasswordManager;
@@ -66,10 +67,12 @@ public class SignupFormController {
 
     private boolean singup(User user) throws ClassNotFoundException, SQLException {
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
+        /*Class.forName("com.mysql.cj.jdbc.Driver");
 
         Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/iitmanage", "root", "1234");
+                "jdbc:mysql://localhost:3306/iitmanage", "root", "1234");*/
+
+        Connection connection = DBConnection.getInstance().getConnection();
 
         String sql = "INSERT INTO user (email, first_name, last_name, password) VALUES (?, ?, ?, ?)";
 
