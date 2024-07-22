@@ -309,4 +309,19 @@ public class StudentFormController {
         preparedStatement.setString(1,id);
         return preparedStatement.executeUpdate()>0;
     }
+
+    private boolean updateStudent(Student student) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection = DriverManager.getConnection(
+                "jdbc:mysql://127.0.0.1:3306/iitmanage", "root", "1234");
+
+        String sql = "UPDATE student SET full_name=?,dob=?,address=? WHERE student_id=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1,student.getName());
+        preparedStatement.setObject(2,student.getDob());
+        preparedStatement.setString(3,student.getAddress());
+        preparedStatement.setString(4,student.getId());
+         return preparedStatement.executeUpdate()>0;
+    }
+
 }
