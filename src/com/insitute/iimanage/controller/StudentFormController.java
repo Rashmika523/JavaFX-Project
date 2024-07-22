@@ -108,7 +108,28 @@ public class StudentFormController {
             System.out.println(student.toString());
         } else {
 
-            for (Student student : Database.studentTable) {
+            //connect with mysql database
+            Student student = new Student();
+            student.setId(txtStudentID.getText());
+            student.setAddress(txtAddress.getText());
+            student.setName(txtFullName.getText());
+            student.setDob(Date.from(txtDob.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            try {
+                if(updateStudent(student)){
+                    setTableData(searchText);
+                    clear();
+                    genarateStudentID();
+                    new Alert(Alert.AlertType.INFORMATION, "Student has been updated...!").show();
+                    btnSaveStudnet.setText("Save Student");
+                    return;
+                }else {
+                    new Alert(Alert.AlertType.INFORMATION, "Something went wrong...!").show();
+                }
+            }catch (ClassNotFoundException | SQLException e){
+                e.printStackTrace();
+            }
+
+           /* for (Student student : Database.studentTable) {
 
                 if (student.getId().equals(txtStudentID.getText())) {
                     student.setAddress(txtAddress.getText());
@@ -122,7 +143,7 @@ public class StudentFormController {
                     btnSaveStudnet.setText("Save Student");
                     return;
                 }
-            }
+            }*/
 
         }
     }
